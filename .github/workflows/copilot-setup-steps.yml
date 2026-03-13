@@ -60,7 +60,7 @@ jobs:
         if: steps.playwright-tests.outcome == 'failure'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: npx playwright test --agent=healer --headless
+        run: npx playwright test 
 
       - name: Upload Playwright report
         if: always() # Luôn chạy để upload report dù pass hay fail
