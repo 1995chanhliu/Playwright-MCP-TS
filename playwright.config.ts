@@ -48,7 +48,7 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
 
     // Headless by default
-    headless: false,
+    headless: process.env.CI ? true : false,
 
     // Suppress Chrome popups (save password, breach warnings, etc.)
     launchOptions: {
