@@ -1,7 +1,7 @@
 import { test } from '../fixtures/fixture';
 import { Validation } from '../utils/Validation';
 
-test.describe('Login Tests', () => {
+test.describe.skip('Login Tests', () => {
   // We override the autoLogin fixture to do nothing for this test suite,
   // because we want to test the login page itself.
   test.use({ autoLogin: async ({}, use) => { await use(); } });

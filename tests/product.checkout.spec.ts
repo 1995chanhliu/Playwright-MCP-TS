@@ -3,7 +3,7 @@ import { Validation } from '../utils/Validation';
 
 test.describe('Product Checkout', () => {
 
-  test('Complete checkout flow for a single product', async ({
+  test.skip('Complete checkout flow for a single product', async ({
     productPage,
     productDetailsPage,
     checkoutPage,

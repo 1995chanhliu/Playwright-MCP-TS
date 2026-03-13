@@ -54,13 +54,21 @@ jobs:
         if: steps.playwright-tests.outcome == 'failure'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: npx @playwright/mcp
+        run: |
+          # 1. Khởi động MCP Server ở chế độ chạy ngầm (&)
+          npx @playwright/mcp &
+          
+          # 2. Đợi vài giây để server sẵn sàng
+          sleep 5
+          
+          # 3. Chạy test. Playwright sẽ tự tìm thấy Server đang chạy ngầm để "Heal"
+          npx playwright test
 
-      - name: Run Playwright Healer Agent
-        if: steps.playwright-tests.outcome == 'failure'
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: npx playwright test 
+      # - name: Run Playwright Healer Agent
+      #   if: steps.playwright-tests.outcome == 'failure'
+      #   env:
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      #   run: npx playwright test 
 
       - name: Upload Playwright report
         if: always() # Luôn chạy để upload report dù pass hay fail
