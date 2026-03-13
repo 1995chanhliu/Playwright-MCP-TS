@@ -62,7 +62,7 @@ jobs:
           sleep 5
           
           # 3. Chạy test. Playwright sẽ tự tìm thấy Server đang chạy ngầm để "Heal"
-          npx -y @google/gemini-cli prompt "My Playwright test failed. Read the rules in .github/agents/playwright-test-healer.md. Look at the result in playwright-report. Connect to the MCP Playwright server to check the reason and fix it. If the locator is wrong"
+          npx -y @google/gemini-cli prompt "My Playwright test failed. Read the rules in .github/agents/playwright-test-healer.md. Look at the result in playwright-report. Connect to the MCP Playwright server to check the reason and fix it. If the locator is wrong" --model gemini-3.1-flash
 
       # - name: Run Playwright Healer Agent
       #   if: steps.playwright-tests.outcome == 'failure'
