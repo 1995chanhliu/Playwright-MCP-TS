@@ -109,6 +109,6 @@ export class CheckoutPage extends BasePage {
    * Click the Back Home button to return to the product listing after a completed order.
    */
   async backHome() {
-    await this.clickButton('Back Home');
+    await this.clickButton('Back Home!');
   }
 }
