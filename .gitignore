@@ -1,0 +1,30 @@
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── TypeScript build output ──────────────────────────────────────────────────
+dist/
+
+# ─── Playwright outputs ───────────────────────────────────────────────────────
+playwright-report/
+test-results/
+blob-report/
+
+# ─── Environment & secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+*.env
+
+# ─── OS files ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Editor / IDE ─────────────────────────────────────────────────────────────
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+# Keep .vscode/mcp.json tracked (shared MCP config for the team)
+.playwright-mcp/
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
