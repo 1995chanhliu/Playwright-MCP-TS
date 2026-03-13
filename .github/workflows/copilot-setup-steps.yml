@@ -22,23 +22,45 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Get Playwright version
+        id: playwright-version
+        run: "echo 'version=$(npx playwright --version)' >> $GITHUB_OUTPUT"
+
+      - name: Cache Playwright Browsers
+        id: cache-playwright-browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ steps.playwright-version.outputs.version }}
+
       - name: Install Playwright Browsers
+        if: steps.cache-playwright-browsers.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
+
+      - name: Install System dependencies
+        run: npx playwright install-deps
 
       - name: Run Playwright Tests
         id: playwright-tests
         run: npx playwright test
         continue-on-error: true # Để workflow chạy tiếp bước Healer nếu test fail
 
+      - name: Start Playwright MCP Server
+        if: steps.playwright-tests.outcome == 'failure'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npx @playwright/mcp
+
       - name: Run Playwright Healer Agent
         if: steps.playwright-tests.outcome == 'failure'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: npx @playwright/mcp npx playwright test --agent=healer --headless
+        run: npx playwright test --agent=healer --headless
 
       - name: Upload Playwright report
         if: always() # Luôn chạy để upload report dù pass hay fail
